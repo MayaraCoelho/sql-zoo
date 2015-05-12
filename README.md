@@ -181,15 +181,14 @@ WHERE name < ALL(SELECT name
                 ) 
 GROUP BY continent
 ```
-### 9 <-- FIXME
+### 9
 ```sh
-SELECT name, continent, population 
+SELECT name, continent, population
 FROM world x 
-WHERE ALL(SELECT population 
-          FROM world y 
-          WHERE x.continent = y.continent 
-          AND y.population > 0
-          ) <= 25000000
+WHERE 25000000 > ALL (SELECT population 
+                      FROM world y 
+                      WHERE y.continent = x.continent) 
+ORDER BY continent
 ```
 ### 10 
 ```sh
