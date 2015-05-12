@@ -326,15 +326,15 @@ SELECT matchid, mdate, COUNT(matchid)
 FROM game JOIN goal ON id = matchid 
 WHERE teamid='GER' GROUP BY matchid
 ```
-### 13  <-- FIXME
+### 13 
 ```sh
-SELECT mdate, 
-      team1, 
-      SUM(CASE WHEN teamid = team1 THEN 1 ELSE 0 END)
-      team 2, 
-      SUM(CASE WHEN teamid = team2 THEN 1 ELSE 0 END)
-FROM game JOIN goal ON matchid = id
-GROUP BY mdate
+SELECT  mdate, team1,
+        SUM(CASE WHEN teamid=team1 THEN 1 ELSE 0 END) score1, 
+        team2,
+        SUM(CASE WHEN teamid=team2 THEN 1 ELSE 0 END) score2
+FROM game LEFT OUTER JOIN goal ON id = matchid
+GROUP BY mdate, matchid, team1, team2
+ORDER BY mdate, matchid, team1, team2
 ```
 ## [More JOIN operations:](http://sqlzoo.net/wiki/More_JOIN_operations)
 
