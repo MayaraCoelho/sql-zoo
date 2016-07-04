@@ -96,6 +96,29 @@ FROM nobel
 WHERE yr = 1984
 ORDER BY subject IN ('Chemistry', 'Physics')
 ```
+Actually I find on Stack Overflow where the question is next that what we want(http://stackoverflow.com/questions/32934106/how-to-list-mysql-query-result-in-particular-sequence): 
+```sh
+that was the first alternative: 
+SELECT winner, subject
+FROM nobel
+WHERE yr=1984 
+ORDER BY
+ CASE
+    WHEN subject IN ('Physics','Chemistry') THEN 1
+    ELSE 0
+ END ASC,
+ subject,
+ winner
+=================================================
+And than a easier way:
+
+SELECT winner, subject
+  FROM nobel
+ WHERE yr=1984 
+ORDER BY (subject IN ('Chemistry', 'Physics') ),
+         subject, winner
+```
+
 ##[SELECT within SELECT Tutorial:](http://sqlzoo.net/wiki/SELECT_within_SELECT_Tutorial)
 
 ### 1: List each country name where the population is larger than 'Russia'.
